@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package com.example.android.architecture.blueprints.todoapp.addedittask;
+package com.fxi.sunset.task.addedittask;
 
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 
-import com.example.android.architecture.blueprints.todoapp.data.Task;
-import com.example.android.architecture.blueprints.todoapp.data.source.LoaderProvider;
-import com.example.android.architecture.blueprints.todoapp.data.source.MockCursorProvider;
-import com.example.android.architecture.blueprints.todoapp.data.source.TasksRepository;
+import com.fxi.sunset.task.data.Task;
+import com.fxi.sunset.task.data.source.LoaderProvider;
+import com.fxi.sunset.task.data.source.MockCursorProvider;
+import com.fxi.sunset.task.data.source.TasksRepository;
 
 import org.junit.Before;
 import org.junit.Test;

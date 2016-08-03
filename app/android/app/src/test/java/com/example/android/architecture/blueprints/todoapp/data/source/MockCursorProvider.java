@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.example.android.architecture.blueprints.todoapp.data.source;
+package com.fxi.sunset.task.data.source;
 
 import android.test.mock.MockCursor;
 
-import com.example.android.architecture.blueprints.todoapp.data.source.local.TasksPersistenceContract;
+import com.fxi.sunset.task.data.source.local.TasksPersistenceContract;
 
 import java.util.ArrayList;
 import java.util.HashMap;

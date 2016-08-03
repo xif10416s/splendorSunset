@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.example.android.architecture.blueprints.todoapp.data.source;
+package com.fxi.sunset.task.data.source;
 
 import android.content.Context;
 
-import com.example.android.architecture.blueprints.todoapp.data.Task;
+import com.fxi.sunset.task.data.Task;
 import com.google.common.collect.Lists;
 
 import org.junit.After;

@@ -16,29 +16,30 @@
 
 package com.fxi.sunset.architecture.blueprints.todoapp;
 
-import android.content.ContentResolver;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.fxi.sunset.task.data.FakeTasksRemoteDataSource;
 import com.fxi.sunset.task.data.source.TasksDataSource;
 import com.fxi.sunset.task.data.source.TasksRepository;
 import com.fxi.sunset.task.data.source.local.TasksLocalDataSource;
-import com.fxi.sunset.task.data.source.remote.TasksRemoteDataSource;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * Enables injection of production implementations for
- * {@link TasksDataSource} at compile time.
+ * Enables injection of mock implementations for
+ * {@link TasksDataSource} at compile time. This is useful for testing, since it allows us to use
+ * a fake instance of the class to isolate the dependencies and run a test hermetically.
  */
 public class Injection {
 
-    public static TasksRepository provideTasksRepository(Context context){
-        return TasksRepository.getInstance(provideRemoteDataSource(), provideLocalDataSource(context));
+    public static TasksRepository provideTasksRepository(@NonNull Context context) {
+        checkNotNull(context);
+        return TasksRepository.getInstance(FakeTasksRemoteDataSource.getInstance(), provideLocalDataSource(context));
     }
 
     public static TasksDataSource provideRemoteDataSource() {
-        return TasksRemoteDataSource.getInstance();
+        return FakeTasksRemoteDataSource.getInstance();
     }
 
     public static TasksLocalDataSource provideLocalDataSource(@NonNull Context context) {
