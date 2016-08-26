@@ -45,9 +45,9 @@ public class TaskDetailPresenter implements TaskDetailContract.Presenter, Loader
     private LoaderProvider mLoaderProvider;
     private LoaderManager mLoaderManager;
     private Task mTask;
-    private String mTaskId;
+    private Long mTaskId;
 
-    public TaskDetailPresenter(@NonNull String taskId,
+    public TaskDetailPresenter(@NonNull Long taskId,
                                @NonNull LoaderProvider loaderProvider,
                                @NonNull LoaderManager loaderManager,
                                @NonNull TasksRepository tasksRepository,
@@ -76,7 +76,7 @@ public class TaskDetailPresenter implements TaskDetailContract.Presenter, Loader
             mTaskDetailView.showMissingTask();
             return;
         }
-        mTaskDetailView.showEditTask(mTask.getId());
+//        mTaskDetailView.showEditTask(mTask.getId());
     }
 
     @Override
@@ -121,7 +121,7 @@ public class TaskDetailPresenter implements TaskDetailContract.Presenter, Loader
         } else {
             mTaskDetailView.showDescription(description);
         }
-        mTaskDetailView.showCompletionStatus(mTask.isCompleted());
+        mTaskDetailView.showCompletionStatus(mTask.isOnSchedule() == 1);
         mTaskDetailView.setLoadingIndicator(false);
     }
 

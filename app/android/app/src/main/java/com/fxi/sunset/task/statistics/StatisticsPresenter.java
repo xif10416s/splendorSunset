@@ -102,7 +102,7 @@ public class StatisticsPresenter implements StatisticsContract.Presenter, TasksR
 
         // Calculate number of active and completed tasks
         for (Task task : tasks) {
-            if (task.isCompleted()) {
+            if (task.isOnSchedule() ==1) {
                 completedTasks += 1;
             } else {
                 activeTasks += 1;

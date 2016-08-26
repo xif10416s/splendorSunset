@@ -23,6 +23,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import android.util.Log;
 import com.fxi.sunset.architecture.blueprints.todoapp.Injection;
 import com.fxi.sunset.R;
 import com.fxi.sunset.task.data.source.LoaderProvider;
@@ -83,9 +84,11 @@ public class AddEditTaskActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
+        Log.e("T", "task act nav onSupportNavigateUp");
         onBackPressed();
         return true;
     }
+
 
     @VisibleForTesting
     public IdlingResource getCountingIdlingResource() {

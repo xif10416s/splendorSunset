@@ -104,7 +104,7 @@ public class TasksRepository implements TasksDataSource {
      * get the data.
      */
     @Override
-    public void getTask(@NonNull final String taskId, @NonNull final GetTaskCallback callback) {
+    public void getTask(@NonNull final Long taskId, @NonNull final GetTaskCallback callback) {
         checkNotNull(taskId);
         checkNotNull(callback);
 
@@ -132,11 +132,11 @@ public class TasksRepository implements TasksDataSource {
     @Override
     public void completeTask(@NonNull Task task) {
         checkNotNull(task);
-        completeTask(task.getId());
+//        completeTask(task.getId());
     }
 
     @Override
-    public void completeTask(@NonNull String taskId) {
+    public void completeTask(@NonNull Long taskId) {
         checkNotNull(taskId);
         mTasksRemoteDataSource.completeTask(taskId);
         mTasksLocalDataSource.completeTask(taskId);
@@ -145,11 +145,11 @@ public class TasksRepository implements TasksDataSource {
     @Override
     public void activateTask(@NonNull Task task) {
         checkNotNull(task);
-        activateTask(task.getId());
+//        activateTask(task.getId());
     }
 
     @Override
-    public void activateTask(@NonNull String taskId) {
+    public void activateTask(@NonNull Long taskId) {
         checkNotNull(taskId);
         mTasksRemoteDataSource.activateTask(taskId);
         mTasksLocalDataSource.activateTask(taskId);
@@ -168,7 +168,7 @@ public class TasksRepository implements TasksDataSource {
     }
 
     @Override
-    public void deleteTask(@NonNull String taskId) {
+    public void deleteTask(@NonNull Long taskId) {
         mTasksRemoteDataSource.deleteTask(checkNotNull(taskId));
         mTasksLocalDataSource.deleteTask(checkNotNull(taskId));
     }

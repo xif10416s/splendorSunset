@@ -16,6 +16,8 @@
 
 package com.fxi.sunset.task.addedittask;
 
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -23,125 +25,132 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 
+import android.util.Log;
+import com.fxi.sunset.R;
 import com.fxi.sunset.task.data.Task;
 import com.fxi.sunset.task.data.source.LoaderProvider;
 import com.fxi.sunset.task.data.source.TasksDataSource;
 import com.fxi.sunset.task.data.source.TasksRepository;
+import com.fxi.sunset.task.service.TaskService;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-
 /**
- * Listens to user actions from the UI ({@link AddEditTaskFragment}), retrieves the data and updates
- * the UI as required.
+ * Listens to user actions from the UI ({@link AddEditTaskFragment}), retrieves
+ * the data and updates the UI as required.
  */
-public class AddEditTaskPresenter implements AddEditTaskContract.Presenter,
-        LoaderManager.LoaderCallbacks<Cursor>, TasksDataSource.GetTaskCallback {
+public class AddEditTaskPresenter implements AddEditTaskContract.Presenter, LoaderManager.LoaderCallbacks<Cursor>,
+		TasksDataSource.GetTaskCallback {
 
-    public final static int EDIT_TASK_LOADER = 3;
+	public final static int EDIT_TASK_LOADER = 3;
 
-    @NonNull
-    private final LoaderProvider mLoaderProvider;
+	@NonNull
+	private final LoaderProvider mLoaderProvider;
 
-    @NonNull
-    private final LoaderManager mLoaderManager;
+	@NonNull
+	private final LoaderManager mLoaderManager;
 
-    @NonNull
-    private TasksRepository mTasksRepository;
+	@NonNull
+	private TasksRepository mTasksRepository;
 
-    @NonNull
-    private AddEditTaskContract.View mAddTaskView;
+	@NonNull
+	private AddEditTaskContract.View mAddTaskView;
 
-    @Nullable
-    private String mTaskId;
+	@Nullable
+	private Long mTaskId;
 
-    public AddEditTaskPresenter(@Nullable String taskId, @NonNull TasksRepository tasksRepository,
-                                @NonNull AddEditTaskContract.View addTaskView, @NonNull LoaderProvider loaderProvider,
-                                @NonNull LoaderManager loaderManager) {
-        mTaskId = taskId;
-        mTasksRepository = checkNotNull(tasksRepository);
-        mAddTaskView = checkNotNull(addTaskView);
-        mLoaderProvider = checkNotNull(loaderProvider);
-        mLoaderManager = checkNotNull(loaderManager, "loaderManager cannot be null!");
+	public AddEditTaskPresenter(@Nullable String taskId, @NonNull TasksRepository tasksRepository,
+			@NonNull AddEditTaskContract.View addTaskView, @NonNull LoaderProvider loaderProvider,
+			@NonNull LoaderManager loaderManager) {
+		// mTaskId = taskId;
+		mTasksRepository = checkNotNull(tasksRepository);
+		mAddTaskView = checkNotNull(addTaskView);
+		mLoaderProvider = checkNotNull(loaderProvider);
+		mLoaderManager = checkNotNull(loaderManager, "loaderManager cannot be null!");
 
-        mAddTaskView.setPresenter(this);
-    }
+		mAddTaskView.setPresenter(this);
+	}
 
-    @Override
-    public void start() {
-        if (!isNewTask()) {
-            populateTask();
-        }
-    }
+	@Override
+	public void start() {
+		if (!isNewTask()) {
+			populateTask();
+		}
+	}
 
-    @Override
-    public void saveTask(String title, String description) {
-        if (isNewTask()) {
-            createTask(title, description);
-        } else {
-            updateTask(title, description);
-        }
-    }
+	@Override
+	public void saveTask(String title, String description, String imageDescription, String videoDescription,
+			Short timeRepeat, Integer timeRange, Short category, Short source, Long createTime, Short isOnSchedule) {
+		if (isNewTask()) {
+			createTask(title, description, imageDescription, videoDescription, timeRepeat, timeRange, category, source,
+					createTime, isOnSchedule);
+		} else {
+			updateTask(title, description);
+		}
+	}
 
-    @Override
-    public void populateTask() {
-        if (isNewTask()) {
-            throw new RuntimeException("populateTask() was called but task is new.");
-        }
-        mTasksRepository.getTask(mTaskId, this);
-    }
+	@Override
+	public void populateTask() {
+		if (isNewTask()) {
+			throw new RuntimeException("populateTask() was called but task is new.");
+		}
+		// mTasksRepository.getTask(mTaskId, this);
+	}
 
-    @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return mLoaderProvider.createTaskLoader(mTaskId);
-    }
+	@Override
+	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+		return mLoaderProvider.createTaskLoader(mTaskId);
+	}
 
-    @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        if (data != null && data.moveToLast()) {
-            Task task = Task.from(data);
-            mAddTaskView.setDescription(task.getDescription());
-            mAddTaskView.setTitle(task.getTitle());
-        } else {
-            // NO-OP, add mode.
-        }
-    }
+	@Override
+	public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+		if (data != null && data.moveToLast()) {
+			Task task = Task.from(data);
+			mAddTaskView.setDescription(task.getDescription());
+			mAddTaskView.setTitle(task.getTitle());
+		} else {
+			// NO-OP, add mode.
+		}
+	}
 
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
+	@Override
+	public void onLoaderReset(Loader<Cursor> loader) {
 
-    }
+	}
 
-    private boolean isNewTask() {
-        return mTaskId == null;
-    }
+	private boolean isNewTask() {
+		return mTaskId == null;
+	}
 
-    private void createTask(String title, String description) {
-        Task newTask = new Task(title, description);
-        if (newTask.isEmpty()) {
-            mAddTaskView.showEmptyTaskError();
-        } else {
-            mTasksRepository.saveTask(newTask);
-            mAddTaskView.showTasksList();
-        }
-    }
+	private void createTask(String title, String description, String imageDescription, String videoDescription,
+			Short timeRepeat, Integer timeRange, Short category, Short source, Long createTime, Short isOnSchedule) {
+		Log.e("T","create task");
+		Task newTask = new Task(title, description, imageDescription, videoDescription, timeRepeat, timeRange,
+				category, source, createTime, isOnSchedule, System.currentTimeMillis());
+		if (newTask.isEmpty()) {
+			mAddTaskView.showEmptyTaskError();
+		} else {
+			mTasksRepository.saveTask(newTask);
+			mAddTaskView.showTasksList();
+		}
+	}
 
-    private void updateTask(String title, String description) {
-        if (isNewTask()) {
-            throw new RuntimeException("updateTask() was called but task is new.");
-        }
-        mTasksRepository.saveTask(new Task(title, description, mTaskId));
-        mAddTaskView.showTasksList(); // After an edit, go back to the list.
-    }
+	private void updateTask(String title, String description) {
+		if (isNewTask()) {
+			throw new RuntimeException("updateTask() was called but task is new.");
+		}
+		// mTasksRepository.saveTask(new Task(title, description, mTaskId));
+		mAddTaskView.showTasksList(); // After an edit, go back to the list.
+	}
 
-    @Override
-    public void onTaskLoaded(Task task) {
-        // we don't need this result since the CursorLoader will load it for us
-        mLoaderManager.initLoader(EDIT_TASK_LOADER, null, this);
-    }
+	@Override
+	public void onTaskLoaded(Task task) {
+		// we don't need this result since the CursorLoader will load it for us
+		mLoaderManager.initLoader(EDIT_TASK_LOADER, null, this);
+	}
 
-    @Override
-    public void onDataNotAvailable() {
-        mAddTaskView.showEmptyTaskError();
-    }
+	@Override
+	public void onDataNotAvailable() {
+		mAddTaskView.showEmptyTaskError();
+	}
 }

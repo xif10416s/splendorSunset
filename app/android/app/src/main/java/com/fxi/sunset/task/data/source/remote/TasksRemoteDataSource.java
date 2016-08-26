@@ -53,8 +53,8 @@ public class TasksRemoteDataSource implements TasksDataSource {
     }
 
     private static void addTask(String title, String description) {
-        Task newTask = new Task(title, description);
-        TASKS_SERVICE_DATA.put(newTask.getId(), newTask);
+//        Task newTask = new Task(title, description);
+//        TASKS_SERVICE_DATA.put(newTask.getId(), newTask);
     }
 
     public void getTasks(TasksDataSource.GetTasksCallback callback) {
@@ -71,7 +71,7 @@ public class TasksRemoteDataSource implements TasksDataSource {
      * source implementation, this would be fired if the server can't be contacted or the server
      * returns an error.
      */
-    public void getTask(@NonNull String taskId, TasksDataSource.GetTaskCallback callback) {
+    public void getTask(@NonNull Long taskId, TasksDataSource.GetTaskCallback callback) {
         final Task task = TASKS_SERVICE_DATA.get(taskId);
 
         // Simulate network by delaying the execution.
@@ -85,29 +85,29 @@ public class TasksRemoteDataSource implements TasksDataSource {
 
     @Override
     public void saveTask(@NonNull Task task) {
-        TASKS_SERVICE_DATA.put(task.getId(), task);
+//        TASKS_SERVICE_DATA.put(task.getId(), task);
     }
 
     @Override
     public void completeTask(@NonNull Task task) {
-        Task completedTask = new Task(task.getTitle(), task.getDescription(), task.getId(), true);
-        TASKS_SERVICE_DATA.put(task.getId(), completedTask);
+//        Task completedTask = new Task(task.getTitle(), task.getDescription(), task.getId(), true);
+//        TASKS_SERVICE_DATA.put(task.getId(), completedTask);
     }
 
     @Override
-    public void completeTask(@NonNull String taskId) {
+    public void completeTask(@NonNull Long taskId) {
         Task oldTask = TASKS_SERVICE_DATA.get(taskId);
         completeTask(oldTask);
     }
 
     @Override
     public void activateTask(@NonNull Task task) {
-        Task activeTask = new Task(task.getTitle(), task.getDescription(), task.getId());
-        TASKS_SERVICE_DATA.put(task.getId(), activeTask);
+//        Task activeTask = new Task(task.getTitle(), task.getDescription(), task.getId());
+//        TASKS_SERVICE_DATA.put(task.getId(), activeTask);
     }
 
     @Override
-    public void activateTask(@NonNull String taskId) {
+    public void activateTask(@NonNull Long taskId) {
         Task oldTask = TASKS_SERVICE_DATA.get(taskId);
         activateTask(oldTask);
     }
@@ -116,9 +116,9 @@ public class TasksRemoteDataSource implements TasksDataSource {
         Iterator<Map.Entry<String, Task>> it = TASKS_SERVICE_DATA.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry<String, Task> entry = it.next();
-            if (entry.getValue().isCompleted()) {
-                it.remove();
-            }
+//            if (entry.getValue().isCompleted()) {
+//                it.remove();
+//            }
         }
     }
 
@@ -127,7 +127,7 @@ public class TasksRemoteDataSource implements TasksDataSource {
     }
 
     @Override
-    public void deleteTask(@NonNull String taskId) {
+    public void deleteTask(@NonNull Long taskId) {
         TASKS_SERVICE_DATA.remove(taskId);
     }
 }

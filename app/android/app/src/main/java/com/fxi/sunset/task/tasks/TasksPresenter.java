@@ -24,12 +24,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 
+import android.util.Log;
 import com.fxi.sunset.task.addedittask.AddEditTaskActivity;
 import com.fxi.sunset.task.data.Task;
 import com.fxi.sunset.task.data.source.LoaderProvider;
 import com.fxi.sunset.task.data.source.TasksDataSource;
 import com.fxi.sunset.task.data.source.TasksRepository;
 
+import java.util.Date;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -84,12 +86,15 @@ public class TasksPresenter implements TasksContract.Presenter,
      * We will always have fresh data from remote, the Loaders handle the local data
      */
     public void loadTasks() {
-        mTasksView.setLoadingIndicator(true);
+        Log.e("T","loadTasks start.."+new Date().getTime());
+//        mTasksView.setLoadingIndicator(true);
         mTasksRepository.getTasks(this);
+        Log.e("T","loadTasks end.."+new Date().getTime());
     }
 
     @Override
     public void onDataLoaded(Cursor data) {
+        Log.e("T","onDataLoaded .."+new Date().getTime());
         mTasksView.setLoadingIndicator(false);
         // Show the list of tasks
         mTasksView.showTasks(data);
@@ -107,6 +112,7 @@ public class TasksPresenter implements TasksContract.Presenter,
 
     @Override
     public void onTasksLoaded(List<Task> tasks) {
+        Log.e("T","onTasksLoaded .."+new Date().getTime());
         // we don't care about the result since the CursorLoader will load the data for us
         if (mLoaderManager.getLoader(TASKS_LOADER) == null) {
             mLoaderManager.initLoader(TASKS_LOADER, mCurrentFiltering.getFilterExtras(), this);
@@ -131,7 +137,7 @@ public class TasksPresenter implements TasksContract.Presenter,
             case ACTIVE_TASKS:
                 mTasksView.showActiveFilterLabel();
                 break;
-            case COMPLETED_TASKS:
+            case ON_SCHEDULER_TASKS:
                 mTasksView.showCompletedFilterLabel();
                 break;
             default:
@@ -145,7 +151,7 @@ public class TasksPresenter implements TasksContract.Presenter,
             case ACTIVE_TASKS:
                 mTasksView.showNoActiveTasks();
                 break;
-            case COMPLETED_TASKS:
+            case ON_SCHEDULER_TASKS:
                 mTasksView.showNoCompletedTasks();
                 break;
             default:
@@ -194,7 +200,7 @@ public class TasksPresenter implements TasksContract.Presenter,
      * Sets the current task filtering type.
      *
      * @param taskFilter Can be {@link TasksFilterType#ALL_TASKS},
-     *                   {@link TasksFilterType#COMPLETED_TASKS}, or {@link TasksFilterType#ACTIVE_TASKS}
+     *                   {@link TasksFilterType#ON_SCHEDULER_TASKS}, or {@link TasksFilterType#ACTIVE_TASKS}
      */
     @Override
     public void setFiltering(TaskFilter taskFilter) {
@@ -209,6 +215,7 @@ public class TasksPresenter implements TasksContract.Presenter,
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        Log.e("T","onLoadFinished .."+new Date().getTime());
         if (data != null) {
             if (data.moveToLast()) {
                 onDataLoaded(data);

@@ -16,10 +16,14 @@
 
 package com.fxi.sunset.common.util;
 
+import android.app.ActivityManager;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+
+import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -54,6 +58,22 @@ public class ActivityUtils {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.add(nonUIFragment, fragmentTag);
         transaction.commit();
+    }
+
+    public static boolean isServiceRun(Context mContext, String className) {
+        boolean isRun = false;
+        ActivityManager activityManager = (ActivityManager) mContext
+                .getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningServiceInfo> serviceList = activityManager
+                .getRunningServices(60);
+        int size = serviceList.size();
+        for (int i = 0; i < size; i++) {
+            if (serviceList.get(i).service.getClassName().equals(className) == true) {
+                isRun = true;
+                break;
+            }
+        }
+        return isRun;
     }
 
 }

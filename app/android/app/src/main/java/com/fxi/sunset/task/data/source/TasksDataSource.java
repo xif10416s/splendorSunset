@@ -48,21 +48,21 @@ public interface TasksDataSource {
 
     void getTasks(@NonNull GetTasksCallback callback);
 
-    void getTask(@NonNull String taskId, @NonNull GetTaskCallback callback);
+    void getTask(@NonNull Long taskId, @NonNull GetTaskCallback callback);
 
     void saveTask(@NonNull Task task);
 
     void completeTask(@NonNull Task task);
 
-    void completeTask(@NonNull String taskId);
+    void completeTask(@NonNull Long taskId);
 
     void activateTask(@NonNull Task task);
 
-    void activateTask(@NonNull String taskId);
+    void activateTask(@NonNull Long taskId);
 
     void clearCompletedTasks();
 
     void deleteAllTasks();
 
-    void deleteTask(@NonNull String taskId);
+    void deleteTask(@NonNull Long taskId);
 }

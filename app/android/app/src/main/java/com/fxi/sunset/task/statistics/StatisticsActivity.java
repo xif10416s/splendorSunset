@@ -100,9 +100,6 @@ public class StatisticsActivity extends AppCompatActivity {
                                         | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(intent);
                                 break;
-                            case R.id.statistics_navigation_menu_item:
-                                // Do nothing, we're already on that screen
-                                break;
                             default:
                                 break;
                         }

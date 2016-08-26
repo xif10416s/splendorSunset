@@ -23,6 +23,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import android.util.Log;
 import com.fxi.sunset.architecture.blueprints.todoapp.Injection;
 import com.fxi.sunset.R;
 import com.fxi.sunset.task.data.source.LoaderProvider;
@@ -50,13 +51,14 @@ public class TaskDetailActivity extends AppCompatActivity {
         ab.setDisplayShowHomeEnabled(true);
 
         // Get the requested task id
-        String taskId = getIntent().getStringExtra(EXTRA_TASK_ID);
+        Long taskId = getIntent().getLongExtra(EXTRA_TASK_ID,-1);
+        Log.e("T","TaskDetailActivity on creat taskId " + taskId);
 
         TaskDetailFragment taskDetailFragment = (TaskDetailFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.contentFrame);
 
         if (taskDetailFragment == null) {
-            taskDetailFragment = TaskDetailFragment.newInstance(taskId);
+            taskDetailFragment = TaskDetailFragment.newInstance(taskId+"");
 
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
                     taskDetailFragment, R.id.contentFrame

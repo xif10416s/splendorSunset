@@ -21,59 +21,73 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 import com.fxi.sunset.BuildConfig;
 
-
 /**
  * The contract used for the db to save the tasks locally.
  */
 public final class TasksPersistenceContract {
 
-    public static final String CONTENT_AUTHORITY = BuildConfig.APPLICATION_ID;
-    public static final String CONTENT_TASK_TYPE = "vnd.android.cursor.dir/" + CONTENT_AUTHORITY + "/" + TaskEntry.TABLE_NAME;
-    public static final String CONTENT_TASK_ITEM_TYPE = "vnd.android.cursor.item/" + CONTENT_AUTHORITY + "/" + TaskEntry.TABLE_NAME;
-    public static final String VND_ANDROID_CURSOR_ITEM_VND = "vnd.android.cursor.item/vnd." + CONTENT_AUTHORITY + ".";
-    private static final String CONTENT_SCHEME = "content://";
-    public static final Uri BASE_CONTENT_URI = Uri.parse(CONTENT_SCHEME + CONTENT_AUTHORITY);
-    private static final String VND_ANDROID_CURSOR_DIR_VND = "vnd.android.cursor.dir/vnd." + CONTENT_AUTHORITY + ".";
-    private static final String SEPARATOR = "/";
+	public static final String CONTENT_AUTHORITY = BuildConfig.APPLICATION_ID;
+	public static final String CONTENT_TASK_TYPE = "vnd.android.cursor.dir/" + CONTENT_AUTHORITY + "/"
+			+ TaskEntry.TABLE_NAME;
+	public static final String CONTENT_TASK_ITEM_TYPE = "vnd.android.cursor.item/" + CONTENT_AUTHORITY + "/"
+			+ TaskEntry.TABLE_NAME;
+	public static final String VND_ANDROID_CURSOR_ITEM_VND = "vnd.android.cursor.item/vnd." + CONTENT_AUTHORITY + ".";
+	private static final String CONTENT_SCHEME = "content://";
+	public static final Uri BASE_CONTENT_URI = Uri.parse(CONTENT_SCHEME + CONTENT_AUTHORITY);
+	private static final String VND_ANDROID_CURSOR_DIR_VND = "vnd.android.cursor.dir/vnd." + CONTENT_AUTHORITY + ".";
+	private static final String SEPARATOR = "/";
 
-    // To prevent someone from accidentally instantiating the contract class,
-    // give it an empty constructor.
-    public TasksPersistenceContract() {
-    }
+	// To prevent someone from accidentally instantiating the contract class,
+	// give it an empty constructor.
+	public TasksPersistenceContract() {
+	}
 
-    public static Uri getBaseTaskUri(String taskId) {
-        return Uri.parse(CONTENT_SCHEME + CONTENT_TASK_ITEM_TYPE + SEPARATOR + taskId);
-    }
+	public static Uri getBaseTaskUri(String taskId) {
+		return Uri.parse(CONTENT_SCHEME + CONTENT_TASK_ITEM_TYPE + SEPARATOR + taskId);
+	}
 
-    /* Inner class that defines the table contents */
-    public static abstract class TaskEntry implements BaseColumns {
+	/* Inner class that defines the table contents */
+	public static abstract class TaskEntry implements BaseColumns {
 
-        public static final String TABLE_NAME = "task";
-        public static final String COLUMN_NAME_ENTRY_ID = "entryid";
-        public static final String COLUMN_NAME_TITLE = "title";
-        public static final String COLUMN_NAME_DESCRIPTION = "description";
-        public static final String COLUMN_NAME_COMPLETED = "completed";
-        public static final Uri CONTENT_TASK_URI = BASE_CONTENT_URI.buildUpon().appendPath(TABLE_NAME).build();
-        public static String[] TASKS_COLUMNS = new String[]{
-                TasksPersistenceContract.TaskEntry._ID,
-                TasksPersistenceContract.TaskEntry.COLUMN_NAME_ENTRY_ID,
-                TasksPersistenceContract.TaskEntry.COLUMN_NAME_TITLE,
-                TasksPersistenceContract.TaskEntry.COLUMN_NAME_DESCRIPTION,
-                TasksPersistenceContract.TaskEntry.COLUMN_NAME_COMPLETED};
+		public static final String TABLE_NAME = "task";
+		public static final String COLUMN_NAME_ENTRY_ID = "_id";
+		public static final String COLUMN_NAME_TITLE = "title";
+		public static final String COLUMN_NAME_DESCRIPTION = "description";
+		public static final String COLUMN_NAME_ISONSCHEDULE = "isOnSchedule";
+		public static final String COLUMN_NAME_IMAGE_DESCIPTION = "imageDescription";
+		public static final String COLUNM_NAME_VIDEO_DESCIPTION = "videoDescription";
+		public static final String COLUMN_NAME_TIME_REPEAT = "timeRepeat";
+		public static final String COLUMN_NAME_TIME_RANGE = "timeRange";
+		public static final String COLUMN_NAME_CATEGORY = "category";
+		public static final String COLUMN_NAME_CREATE_TIME = "createTime";
+        public static final String COLUMN_NAME_SOURCE = "source";
+		public static final Uri CONTENT_TASK_URI = BASE_CONTENT_URI.buildUpon().appendPath(TABLE_NAME).build();
+		public static String[] TASKS_COLUMNS = new String[] {
+				TasksPersistenceContract.TaskEntry.COLUMN_NAME_ENTRY_ID,
+				TasksPersistenceContract.TaskEntry.COLUMN_NAME_TITLE,
+				TasksPersistenceContract.TaskEntry.COLUMN_NAME_DESCRIPTION,
+				TasksPersistenceContract.TaskEntry.COLUMN_NAME_ISONSCHEDULE,
+				TasksPersistenceContract.TaskEntry.COLUMN_NAME_IMAGE_DESCIPTION,
+				TasksPersistenceContract.TaskEntry.COLUNM_NAME_VIDEO_DESCIPTION,
+				TasksPersistenceContract.TaskEntry.COLUMN_NAME_TIME_REPEAT,
+				TasksPersistenceContract.TaskEntry.COLUMN_NAME_TIME_RANGE,
+				TasksPersistenceContract.TaskEntry.COLUMN_NAME_CATEGORY,
+                TasksPersistenceContract.TaskEntry.COLUMN_NAME_SOURCE,
+				TasksPersistenceContract.TaskEntry.COLUMN_NAME_CREATE_TIME };
 
-        public static Uri buildTasksUriWith(long id) {
-            return ContentUris.withAppendedId(CONTENT_TASK_URI, id);
-        }
+		public static Uri buildTasksUriWith(long id) {
+			return ContentUris.withAppendedId(CONTENT_TASK_URI, id);
+		}
 
-        public static Uri buildTasksUriWith(String id) {
-            Uri uri = CONTENT_TASK_URI.buildUpon().appendPath(id).build();
-            return uri;
-        }
+		public static Uri buildTasksUriWith(String id) {
+			Uri uri = CONTENT_TASK_URI.buildUpon().appendPath(id).build();
+			return uri;
+		}
 
-        public static Uri buildTasksUri() {
-            return CONTENT_TASK_URI.buildUpon().build();
-        }
+		public static Uri buildTasksUri() {
+			return CONTENT_TASK_URI.buildUpon().build();
+		}
 
-    }
+	}
 
 }

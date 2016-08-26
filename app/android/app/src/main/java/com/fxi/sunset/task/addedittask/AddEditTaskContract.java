@@ -16,6 +16,7 @@
 
 package com.fxi.sunset.task.addedittask;
 
+import android.support.annotation.Nullable;
 import com.fxi.sunset.common.BasePresenter;
 import com.fxi.sunset.common.BaseView;
 
@@ -37,7 +38,8 @@ public interface AddEditTaskContract {
 
     interface Presenter extends BasePresenter {
 
-        void saveTask(String title, String description);
+		void saveTask(String title, String description, String imageDescription, String videoDescription,
+				Short timeRepeat, Integer timeRange, Short category, Short source, Long createTime, Short isOnSchedule);
 
         void populateTask();
     }

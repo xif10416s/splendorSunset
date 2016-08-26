@@ -33,5 +33,5 @@ public enum TasksFilterType {
     /**
      * Filters only the completed tasks.
      */
-    COMPLETED_TASKS
+    ON_SCHEDULER_TASKS
 }

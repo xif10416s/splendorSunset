@@ -15,23 +15,45 @@
   -->
 
 <resources>
-    <string name="app_name">TO-DO-MVP-CONTENTPROVIDERS</string>
-    <string name="add_task">New TO-DO</string>
-    <string name="edit_task">Edit TO-DO</string>
+    <string name="app_name">夕阳红</string>
+    <string name="add_task">新建计划</string>
+    <string name="edit_task">编辑计划</string>
     <string name="task_marked_complete">Task marked complete</string>
     <string name="task_marked_active">Task marked active</string>
     <string name="loading_tasks_error">Error while loading tasks</string>
     <string name="completed_tasks_cleared">Completed tasks cleared</string>
-    <string name="menu_filter">Filter</string>
+    <string name="menu_filter">全部</string>
+    <string name="menu_save">保存</string>
     <string name="menu_clear">Clear completed</string>
     <string name="menu_delete_task">Delete task</string>
-    <string name="navigation_view_header_title">TO-DOs</string>
-    <string name="title_hint">Title</string>
-    <string name="description_hint">Enter your TO-DO here.</string>
+    <string name="navigation_view_header_title">功能列表</string>
+    <string name="title_hint">任务标题</string>
+    <string name="description_hint">任务描述内容</string>
+    <string name="category_eat">饮食</string>
+    <string name="category_sport">锻炼</string>
+    <string name="category_medical">吃药</string>
+    <string name="repeat_all">每天</string>
+    <string name="repeat_0">周日</string>
+    <string name="repeat_1">周一</string>
+    <string name="repeat_2">周二</string>
+    <string name="repeat_3">周三</string>
+    <string name="repeat_4">周四</string>
+    <string name="repeat_5">周五</string>
+    <string name="repeat_6">周六</string>
+    <string name="timeGetUp">起床</string>
+    <string name="timeBreakfast">早饭</string>
+    <string name="timeLunch">中饭</string>
+    <string name="timeDinner">晚饭</string>
+    <string name="timeSleep">睡觉</string>
+    <string name="timeRangeMorning">上午</string>
+    <string name="timeRangeNoon">中午</string>
+    <string name="timeRangeAfterNoon">下午</string>
+    <string name="timeRangeEven">晚上</string>
     <string name="empty_task_message">TO DOs cannot be empty</string>
     <string name="successfully_saved_task_message">TO-DO saved</string>
-    <string name="list_title">TO-DO List</string>
+    <string name="list_title">任务管理</string>
     <string name="statistics_title">Statistics</string>
+    <string name="personal_title">个人信息</string>
     <string name="statistics_no_tasks">You have no tasks.</string>
     <string name="statistics_active_tasks">Active tasks:</string>
     <string name="statistics_completed_tasks">Completed tasks:</string>
@@ -47,13 +69,14 @@
     <string name="nav_all">All</string>
     <string name="nav_active">Active</string>
     <string name="nav_completed">Completed</string>
-    <string name="label_all">All TO-DOs</string>
-    <string name="label_active">Active TO-DOs</string>
-    <string name="label_completed">Completed TO-DOs</string>
-    <string name="no_tasks_all">You have no TO-DOs!</string>
+    <string name="label_all">全部任务列表</string>
+    <string name="label_active">即将开始的任务</string>
+    <string name="label_completed">计划中的任务</string>
+    <string name="no_tasks_all">没有任务</string>
+    <string name="no_schedule_tasks">暂时还没有安排的计划.</string>
     <string name="no_tasks_active">You have no active TO-DOs!</string>
-    <string name="no_tasks_completed">You have no completed TO-DOs!</string>
+    <string name="no_tasks_completed">没有计划的任务</string>
     <string name="no_tasks_add">Add a TO-DO item +</string>
-    <string name="refresh">Refresh</string>
+    <string name="refresh">计划中</string>
 
 </resources>

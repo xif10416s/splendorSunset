@@ -23,6 +23,7 @@ import com.fxi.sunset.task.data.FakeTasksRemoteDataSource;
 import com.fxi.sunset.task.data.source.TasksDataSource;
 import com.fxi.sunset.task.data.source.TasksRepository;
 import com.fxi.sunset.task.data.source.local.TasksLocalDataSource;
+import com.fxi.sunset.task.data.source.remote.TasksRemoteDataSource;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

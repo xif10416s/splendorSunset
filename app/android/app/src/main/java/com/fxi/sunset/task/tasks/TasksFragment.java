@@ -19,6 +19,7 @@ package com.fxi.sunset.task.tasks;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -29,22 +30,21 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.CursorAdapter;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.PopupMenu;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.*;
 
 import com.fxi.sunset.R;
 import com.fxi.sunset.task.addedittask.AddEditTaskActivity;
 import com.fxi.sunset.task.data.Task;
 import com.fxi.sunset.task.taskdetail.TaskDetailActivity;
+
+import java.util.Date;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -168,16 +168,16 @@ public class TasksFragment extends Fragment implements TasksContract.View {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_clear:
-                mPresenter.clearCompletedTasks();
+            case R.id.menu_all:
+//                mPresenter.clearCompletedTasks();
+                mPresenter.setFiltering(TaskFilter.from(TasksFilterType.ALL_TASKS));
                 break;
-            case R.id.menu_filter:
-                showFilteringPopUpMenu();
-                break;
-            case R.id.menu_refresh:
-                mPresenter.loadTasks();
+            case R.id.menu_on_schedule:
+                mPresenter.setFiltering(TaskFilter.from(TasksFilterType.ON_SCHEDULER_TASKS));
                 break;
         }
+        Log.e("T","onOptionsItemSelected .."+new Date().getTime());
+        mPresenter.loadTasks();
         return true;
     }
 
@@ -188,28 +188,28 @@ public class TasksFragment extends Fragment implements TasksContract.View {
 
     @Override
     public void showFilteringPopUpMenu() {
-        PopupMenu popup = new PopupMenu(getContext(), getActivity().findViewById(R.id.menu_filter));
-        popup.getMenuInflater().inflate(R.menu.filter_tasks, popup.getMenu());
-
-        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.active:
-                        mPresenter.setFiltering(TaskFilter.from(TasksFilterType.ACTIVE_TASKS));
-                        break;
-                    case R.id.completed:
-                        mPresenter.setFiltering(TaskFilter.from(TasksFilterType.COMPLETED_TASKS));
-                        break;
-                    default:
-                        mPresenter.setFiltering(TaskFilter.from(TasksFilterType.ALL_TASKS));
-                        break;
-                }
-                mPresenter.loadTasks();
-                return true;
-            }
-        });
-
-        popup.show();
+//        PopupMenu popup = new PopupMenu(getContext(), getActivity().findViewById(R.id.menu_filter));
+//        popup.getMenuInflater().inflate(R.menu.filter_tasks, popup.getMenu());
+//
+//        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+//            public boolean onMenuItemClick(MenuItem item) {
+//                switch (item.getItemId()) {
+//                    case R.id.active:
+//                        mPresenter.setFiltering(TaskFilter.from(TasksFilterType.ACTIVE_TASKS));
+//                        break;
+//                    case R.id.completed:
+//                        mPresenter.setFiltering(TaskFilter.from(TasksFilterType.ON_SCHEDULER_TASKS));
+//                        break;
+//                    default:
+//                        mPresenter.setFiltering(TaskFilter.from(TasksFilterType.ALL_TASKS));
+//                        break;
+//                }
+//                mPresenter.loadTasks();
+//                return true;
+//            }
+//        });
+//
+//        popup.show();
     }
 
     @Override
@@ -304,6 +304,7 @@ public class TasksFragment extends Fragment implements TasksContract.View {
         // in it's own Activity, since it makes more sense that way and it gives us the flexibility
         // to show some Intent stubbing.
         Intent intent = new Intent(getContext(), TaskDetailActivity.class);
+        Log.e("T","show task detail " + task.getId());
         intent.putExtra(TaskDetailActivity.EXTRA_TASK_ID, task.getId());
         startActivity(intent);
     }
@@ -369,11 +370,11 @@ public class TasksFragment extends Fragment implements TasksContract.View {
             viewHolder.titleTV.setText(task.getTitleForList());
 
             // Active/completed task UI
-            viewHolder.completeCB.setChecked(task.isCompleted());
+            viewHolder.completeCB.setChecked(task.isOnSchedule() ==1);
             viewHolder.completeCB.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (!task.isCompleted()) {
+                    if (!(task.isOnSchedule() ==1)) {
                         mItemListener.onCompleteTaskClick(task);
                     } else {
                         mItemListener.onActivateTaskClick(task);
@@ -381,7 +382,7 @@ public class TasksFragment extends Fragment implements TasksContract.View {
                 }
             });
 
-            if (task.isCompleted()) {
+            if (task.isOnSchedule() == 1) {
                 viewHolder.rowView.setBackgroundDrawable(context
                         .getResources().getDrawable(R.drawable.list_completed_touch_feedback));
             } else {
@@ -392,6 +393,7 @@ public class TasksFragment extends Fragment implements TasksContract.View {
             viewHolder.rowView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    Log.e("T","on row click " + task.getId());
                     mItemListener.onTaskClick(task);
                 }
             });

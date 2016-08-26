@@ -15,9 +15,14 @@
   -->
 <resources>
 
-    <!-- Base application theme. --><style name="AppTheme" parent="Base.AppTheme" />
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Base.AppTheme">
+        <item name="android:textSize">20sp</item>
+        <item name="android:actionMenuTextAppearance">@style/menutextappearance</item>
+    </style>
 
-    <style name="AppTheme.OverlapSystemBar" parent="Base.AppTheme" />
+    <style name="AppTheme.OverlapSystemBar" parent="Base.AppTheme">
+     </style>
 
     <style name="Base.AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
@@ -26,5 +31,33 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="Toolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Toolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+    <style name="btn_custom_style">
+        <item name="android:layout_width">148dip</item>
+        <item name="android:layout_height">48dip</item>
+        <item name="android:layout_gravity">center|right</item>
+        <item name="android:background">?android:listChoiceBackgroundIndicator</item>
+    </style>
+
+    <style name="NotificationContent">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
+    <style name="NotificationTitle">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="NavigationDrawerStyle">
+        <item name="android:textSize">26sp</item><!-- text size in menu-->
+        <item name="android:listPreferredItemHeightSmall">45dp</item><!-- item size in menu-->
+    </style>
+    <style name="AppTitleTheme" parent="Theme.AppCompat.Light">
+        <item name="android:textSize">30sp</item>
+    </style>
+
+    <style name="menutextappearance" parent="android:style/TextAppearance.Holo.Widget.ActionBar.Menu">
+        <item name="android:textColor">#fff</item>
+        <item name="android:textSize">30sp</item>
+    </style>
 </resources>

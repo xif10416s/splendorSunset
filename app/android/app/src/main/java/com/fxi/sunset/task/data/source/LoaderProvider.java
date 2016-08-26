@@ -46,11 +46,11 @@ public class LoaderProvider {
                 selectionArgs = null;
                 break;
             case ACTIVE_TASKS:
-                selection = TasksPersistenceContract.TaskEntry.COLUMN_NAME_COMPLETED + " = ? ";
+                selection = TasksPersistenceContract.TaskEntry.COLUMN_NAME_ISONSCHEDULE + " = ? ";
                 selectionArgs = new String[]{String.valueOf(0)};
                 break;
-            case COMPLETED_TASKS:
-                selection = TasksPersistenceContract.TaskEntry.COLUMN_NAME_COMPLETED + " = ? ";
+            case ON_SCHEDULER_TASKS:
+                selection = TasksPersistenceContract.TaskEntry.COLUMN_NAME_ISONSCHEDULE + " = ? ";
                 selectionArgs = new String[]{String.valueOf(1)};
                 break;
         }
@@ -62,7 +62,7 @@ public class LoaderProvider {
         );
     }
 
-    public Loader<Cursor> createTaskLoader(String taskId) {
+    public Loader<Cursor> createTaskLoader(Long taskId) {
         return new CursorLoader(mContext, TasksPersistenceContract.TaskEntry.buildTasksUriWith(taskId),
                                 null,
                                 null,

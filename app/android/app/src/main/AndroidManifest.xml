@@ -24,7 +24,7 @@
     android:supportsRtl="true"
     android:theme="@style/AppTheme">
     <activity
-      android:name="com.fxi.sunset.task.tasks.TasksActivity"
+      android:name=".MainActivity"
       android:theme="@style/AppTheme.OverlapSystemBar">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
@@ -43,11 +43,15 @@
 
     <activity android:name="com.fxi.sunset.task.addedittask.AddEditTaskActivity" />
     <activity android:name="com.fxi.sunset.task.statistics.StatisticsActivity" />
+    <activity android:name="com.fxi.sunset.task.tasks.TasksActivity" />
+    <activity android:name="com.fxi.sunset.personal.activity.PersonalInfoSettingActivity" />
 
     <provider
       android:name="com.fxi.sunset.task.data.source.TasksProvider"
       android:authorities="${packageName}"
       android:exported="false" />
+
+    <service android:name="com.fxi.sunset.task.service.TaskService" />
   </application>
 
 </manifest>

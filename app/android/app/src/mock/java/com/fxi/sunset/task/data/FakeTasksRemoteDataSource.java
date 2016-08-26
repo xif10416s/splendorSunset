@@ -51,36 +51,36 @@ public class FakeTasksRemoteDataSource implements TasksDataSource {
     }
 
     @Override
-    public void getTask(@NonNull String taskId, @NonNull GetTaskCallback callback) {
+    public void getTask(@NonNull Long taskId, @NonNull GetTaskCallback callback) {
         Task task = TASKS_SERVICE_DATA.get(taskId);
         callback.onTaskLoaded(task);
     }
 
     @Override
     public void saveTask(@NonNull Task task) {
-        TASKS_SERVICE_DATA.put(task.getId(), task);
+//        TASKS_SERVICE_DATA.put(task.getId(), task);
     }
 
     @Override
     public void completeTask(@NonNull Task task) {
-        Task completedTask = new Task(task.getTitle(), task.getDescription(), task.getId(), true);
-        TASKS_SERVICE_DATA.put(task.getId(), completedTask);
+//        Task completedTask = new Task(task.getTitle(), task.getDescription(), task.getId(), true);
+//        TASKS_SERVICE_DATA.put(task.getId(), completedTask);
     }
 
     @Override
-    public void completeTask(@NonNull String taskId) {
+    public void completeTask(@NonNull Long taskId) {
         Task oldTask = TASKS_SERVICE_DATA.get(taskId);
         completeTask(oldTask);
     }
 
     @Override
     public void activateTask(@NonNull Task task) {
-        Task activeTask = new Task(task.getTitle(), task.getDescription(), task.getId());
-        TASKS_SERVICE_DATA.put(task.getId(), activeTask);
+//        Task activeTask = new Task(task.getTitle(), task.getDescription(), task.getId());
+//        TASKS_SERVICE_DATA.put(task.getId(), activeTask);
     }
 
     @Override
-    public void activateTask(@NonNull String taskId) {
+    public void activateTask(@NonNull Long taskId) {
         Task oldTask = TASKS_SERVICE_DATA.get(taskId);
         activateTask(oldTask);
     }
@@ -90,14 +90,14 @@ public class FakeTasksRemoteDataSource implements TasksDataSource {
         Iterator<Map.Entry<String, Task>> it = TASKS_SERVICE_DATA.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry<String, Task> entry = it.next();
-            if (entry.getValue().isCompleted()) {
-                it.remove();
-            }
+//            if (entry.getValue().isCompleted()) {
+//                it.remove();
+//            }
         }
     }
 
     @Override
-    public void deleteTask(@NonNull String taskId) {
+    public void deleteTask(@NonNull Long taskId) {
         TASKS_SERVICE_DATA.remove(taskId);
     }
 
@@ -108,8 +108,8 @@ public class FakeTasksRemoteDataSource implements TasksDataSource {
 
     @VisibleForTesting
     public void addTasks(Task... tasks) {
-        for (Task task : tasks) {
-            TASKS_SERVICE_DATA.put(task.getId(), task);
-        }
+//        for (Task task : tasks) {
+//            TASKS_SERVICE_DATA.put(task.getId(), task);
+//        }
     }
 }

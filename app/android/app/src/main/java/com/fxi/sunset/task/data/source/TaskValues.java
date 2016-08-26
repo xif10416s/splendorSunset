@@ -28,7 +28,15 @@ public class TaskValues {
         values.put(TasksPersistenceContract.TaskEntry.COLUMN_NAME_ENTRY_ID, task.getId());
         values.put(TasksPersistenceContract.TaskEntry.COLUMN_NAME_TITLE, task.getTitle());
         values.put(TasksPersistenceContract.TaskEntry.COLUMN_NAME_DESCRIPTION, task.getDescription());
-        values.put(TasksPersistenceContract.TaskEntry.COLUMN_NAME_COMPLETED, task.isCompleted() ? 1 : 0);
+        values.put(TasksPersistenceContract.TaskEntry.COLUMN_NAME_ISONSCHEDULE, task.isOnSchedule());
+        values.put(TasksPersistenceContract.TaskEntry.COLUMN_NAME_IMAGE_DESCIPTION, task.getImageDescription());
+        values.put(TasksPersistenceContract.TaskEntry.COLUNM_NAME_VIDEO_DESCIPTION, task.getVideoDescription());
+        values.put(TasksPersistenceContract.TaskEntry.COLUMN_NAME_TIME_RANGE, task.getTimeRange());
+        values.put(TasksPersistenceContract.TaskEntry.COLUMN_NAME_TIME_REPEAT, task.getTimeRepeat());
+        values.put(TasksPersistenceContract.TaskEntry.COLUMN_NAME_CATEGORY, task.getCategory());
+        values.put(TasksPersistenceContract.TaskEntry.COLUMN_NAME_CREATE_TIME, task.getCreateTime());
+        values.put(TasksPersistenceContract.TaskEntry.COLUMN_NAME_SOURCE, task.getSource());
+
         return values;
     }
 

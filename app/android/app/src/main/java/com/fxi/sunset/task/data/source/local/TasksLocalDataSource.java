@@ -54,7 +54,7 @@ public class TasksLocalDataSource implements TasksDataSource {
     }
 
     @Override
-    public void getTask(@NonNull String taskId, @NonNull GetTaskCallback callback) {
+    public void getTask(@NonNull Long taskId, @NonNull GetTaskCallback callback) {
         // no-op since the data is loaded via Cursor Loader
     }
 
@@ -69,23 +69,23 @@ public class TasksLocalDataSource implements TasksDataSource {
         checkNotNull(task);
 
         ContentValues values = new ContentValues();
-        values.put(TasksPersistenceContract.TaskEntry.COLUMN_NAME_COMPLETED, 1);
+        values.put(TasksPersistenceContract.TaskEntry.COLUMN_NAME_ISONSCHEDULE, 1);
 
         String selection = TasksPersistenceContract.TaskEntry.COLUMN_NAME_ENTRY_ID + " LIKE ?";
-        String[] selectionArgs = {task.getId()};
+        Long[] selectionArgs = {task.getId()};
 
-        mContentResolver.update(TasksPersistenceContract.TaskEntry.buildTasksUri(), values, selection, selectionArgs);
+        mContentResolver.update(TasksPersistenceContract.TaskEntry.buildTasksUri(), values, selection, new String[]{""});
     }
 
     @Override
-    public void completeTask(@NonNull String taskId) {
+    public void completeTask(@NonNull Long taskId) {
         checkNotNull(taskId);
 
         ContentValues values = new ContentValues();
-        values.put(TasksPersistenceContract.TaskEntry.COLUMN_NAME_COMPLETED, 1);
+        values.put(TasksPersistenceContract.TaskEntry.COLUMN_NAME_ISONSCHEDULE, 1);
 
         String selection = TasksPersistenceContract.TaskEntry.COLUMN_NAME_ENTRY_ID + " LIKE ?";
-        String[] selectionArgs = {taskId};
+        String[] selectionArgs = {taskId+""};
 
         int rows = mContentResolver.update(TasksPersistenceContract.TaskEntry.buildTasksUri(), values, selection, selectionArgs);
 
@@ -96,29 +96,29 @@ public class TasksLocalDataSource implements TasksDataSource {
         checkNotNull(task);
 
         ContentValues values = new ContentValues();
-        values.put(TasksPersistenceContract.TaskEntry.COLUMN_NAME_COMPLETED, false);
+        values.put(TasksPersistenceContract.TaskEntry.COLUMN_NAME_ISONSCHEDULE, false);
 
         String selection = TasksPersistenceContract.TaskEntry.COLUMN_NAME_ENTRY_ID + " LIKE ?";
-        String[] selectionArgs = {task.getId()};
+//        String[] selectionArgs = {task.getId()};
 
-        mContentResolver.update(TasksPersistenceContract.TaskEntry.buildTasksUri(), values, selection, selectionArgs);
+        mContentResolver.update(TasksPersistenceContract.TaskEntry.buildTasksUri(), values, selection, new String[]{""});
     }
 
     @Override
-    public void activateTask(@NonNull String taskId) {
+    public void activateTask(@NonNull Long taskId) {
         checkNotNull(taskId);
 
         ContentValues values = new ContentValues();
-        values.put(TasksPersistenceContract.TaskEntry.COLUMN_NAME_COMPLETED, false);
+        values.put(TasksPersistenceContract.TaskEntry.COLUMN_NAME_ISONSCHEDULE, false);
 
         String selection = TasksPersistenceContract.TaskEntry.COLUMN_NAME_ENTRY_ID + " LIKE ?";
-        String[] selectionArgs = {taskId};
+        String[] selectionArgs = {taskId+""};
 
         mContentResolver.update(TasksPersistenceContract.TaskEntry.buildTasksUri(), values, selection, selectionArgs);
     }
 
     public void clearCompletedTasks() {
-        String selection = TasksPersistenceContract.TaskEntry.COLUMN_NAME_COMPLETED + " LIKE ?";
+        String selection = TasksPersistenceContract.TaskEntry.COLUMN_NAME_ISONSCHEDULE + " LIKE ?";
         String[] selectionArgs = {"1"};
 
         mContentResolver.delete(TasksPersistenceContract.TaskEntry.buildTasksUri(), selection, selectionArgs);
@@ -128,9 +128,9 @@ public class TasksLocalDataSource implements TasksDataSource {
         mContentResolver.delete(TasksPersistenceContract.TaskEntry.buildTasksUri(), null, null);
     }
 
-    public void deleteTask(@NonNull String taskId) {
+    public void deleteTask(@NonNull Long taskId) {
         String selection = TasksPersistenceContract.TaskEntry.COLUMN_NAME_ENTRY_ID + " LIKE ?";
-        String[] selectionArgs = {taskId};
+        String[] selectionArgs = {taskId+""};
 
         mContentResolver.delete(TasksPersistenceContract.TaskEntry.buildTasksUri(), selection, selectionArgs);
     }
